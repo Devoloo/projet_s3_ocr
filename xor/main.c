@@ -206,7 +206,7 @@ void test(void)
     for (int i = 0; i < SIZE_OF_TEST; i++)
     {
         feed_forward();
-        printf("Result given by IA: %lf     Expected result: %lf\n     Margin of error: %lf", sigL3[0], test_answr_key[i], sigL3[0] - test_answr_key[i]);
+        printf("Result given by IA: %lf     Expected result: %lf\n", sigL3[0], test_answr_key[i],);
         reset_nn();
         input_ptr += 2;
     }
