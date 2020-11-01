@@ -9,6 +9,11 @@
         <option name="buildTarget" value="all" />
         <option name="cleanTarget" value="clean" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="modules">
+          <set>
+            <option value="D:\Documents\EPITA\2_PROJET_OCR\projet_s3_ocr\xor" />
+          </set>
+        </option>
         <option name="switches" value="--just-print --print-directory --keep-going" />
       </MakefileProjectSettings>
     </option>

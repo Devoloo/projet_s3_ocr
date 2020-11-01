@@ -208,6 +208,7 @@ void test(void)
     {
         feed_forward();
         printf("Result given by IA: %lf     Expected result: %lf\n", sigL3[0], test_answr_key[i]);
+        printf("L2[0] %lf\nL2[1] %lf\nL3[0] %lf\n", sigL2[0], sigL2[1], sigL3[0])
         reset_nn();
         input_ptr += 2;
     }
