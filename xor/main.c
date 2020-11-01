@@ -121,7 +121,7 @@ void backprop(void)
     int i = 0;
     int j = 0;
 
-    for (int epochs = 0; epochs < 1000000; epochs++)
+    for (int epochs = 0; epochs < 100000000; epochs++)
     {
         input_ptr = train_input;
 
