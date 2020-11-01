@@ -32,7 +32,7 @@ depend: $(SRCS)
 
 # Nettoyage
 clean:
-	rm -f *.o core *~ $(CIBLE)
+	rm -f *.o core *~ *.exe $(CIBLE)
 
 # Nettoyage simple
 soft:
