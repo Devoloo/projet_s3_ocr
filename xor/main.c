@@ -251,12 +251,12 @@ int main()
     printf("\n");
     for(int i = 0; i < L1_WEIGHTS; i++)
     {
-        printf("Weight L1 to L2 (%d / %d): %lf\n", i, L1_WEIGHTS, L1_to_L2_weights[i]);
+        printf("Weight L1 to L2 (%d / %d): %lf\n", i +1, L1_WEIGHTS, L1_to_L2_weights[i]);
     }
     printf("\n");
     for(int i = 0; i < L2_WEIGHTS; i++)
     {
-        printf("Weight L2 to L3 (%d / %d): %lf\n", i, L2_WEIGHTS, L2_to_L3_weights[i]);
+        printf("Weight L2 to L3 (%d / %d): %lf\n", i + 1, L2_WEIGHTS, L2_to_L3_weights[i]);
     }
 
     return 0;
