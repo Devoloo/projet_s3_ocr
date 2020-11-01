@@ -10,6 +10,7 @@
 #define SIZE_OF_TRAIN 4
 #define L1_WEIGHTS 4
 #define L2_WEIGHTS 2
+#define ITERATION 1000000
 
 
 double train_input[8] = {0, 0, 0, 1, 1, 0, 1, 1}; //input is first layer of training
@@ -121,7 +122,7 @@ void backprop(void)
     int i = 0;
     int j = 0;
 
-    for (int epochs = 0; epochs < 100000000; epochs++)
+    for (int epochs = 0; epochs < ITERATION; epochs++)
     {
         input_ptr = train_input;
 
@@ -206,7 +207,7 @@ void test(void)
     for (int i = 0; i < SIZE_OF_TEST; i++)
     {
         feed_forward();
-        printf("Result given by IA: %lf     Expected result: %lf\n", sigL3[0], test_answr_key[i],);
+        printf("Result given by IA: %lf     Expected result: %lf\n", sigL3[0], test_answr_key[i]);
         reset_nn();
         input_ptr += 2;
     }
