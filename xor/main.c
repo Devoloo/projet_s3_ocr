@@ -237,6 +237,62 @@ void fill_hyperparams_with_rand(void)
 }
 
 
+
+//---------------------------------------------Sauvegarde des poids-----------------------------------------------------
+
+//Sauvegarde les poids dans un fichier txt
+void Save_weights(void)
+{
+    FILE *file;
+
+    backprop();
+
+
+
+    file = fopen("ia_save.txt","w");
+
+    for(int i = 0; i < L1_WEIGHTS; i++)
+    {
+        fprintf(file,"%lf\n", L1_to_L2_weights[i]);
+
+    }
+    putchar('\n');
+
+    for(int i = 0; i < L2_WEIGHTS; i++)
+    {
+        fprintf(file,"%lf\n", L2_to_L3_weights[i]);
+    }
+
+    fclose(file);
+}
+
+//Récupère les poids du fichier txt (je crois que ça sert a rien mdr)
+void Get_weights_saved(void)
+{
+    FILE *file;
+
+    file = fopen("ia_save.txt","r");
+
+    char buff[255];
+
+    for(int i = 0; i < L1_WEIGHTS; i++)
+    {
+        fgets(buff,255,(FILE*) file);
+
+        double w = strtod(buff,0);
+        L1_to_L2_weights[i] = w;
+    }
+    for(int j = 0; j < L2_WEIGHTS; j++)
+    {
+        fgets(buff,255,(FILE*) file);
+        double w2 = strtod(buff,0);
+        L2_to_L3_weights[j] = w2;
+    }
+
+    fclose(file);
+}
+
+
 //------------------------------------------------Main------------------------------------------------------------------
 int main()
 {
@@ -244,6 +300,12 @@ int main()
     //randomizer
     srand((unsigned) 0); //seed with 0 for consistency
     fill_hyperparams_with_rand();
+
+
+    /*Save_weights();   //Pour tester la sauvegarde des poids
+    Get_weights_saved();
+    printf("%lf \n",L1_to_L2_weights[0]);
+    printf("%lf \n",L1_to_L2_weights[1]);*/
 
     backprop();
 
