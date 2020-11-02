@@ -1,7 +1,7 @@
 # Le compilateur et ses options
 CC = gcc
 CPPFLAGS =
-CFLAGS = -g -Wall -std=c99
+CFLAGS = -g -Wall -Wextra -std=c99
 
 # L'editeur de lien et ses options
 LD = gcc
