@@ -278,14 +278,14 @@ void Get_weights_saved(void)
 
     for(int i = 0; i < L1_WEIGHTS; i++)
     {
-        fgets(buff,255,(FILE*) file);
+        fgets((char * restrict) buff,255,(FILE * restrict) file);
 
         double w = strtod(buff,0);
         L1_to_L2_weights[i] = w;
     }
     for(int j = 0; j < L2_WEIGHTS; j++)
     {
-        fgets(buff,255,(FILE*) file);
+        fgets((char * restrict) buff,255,(FILE * restrict) file);
         double w2 = strtod(buff,0);
         L2_to_L3_weights[j] = w2;
     }

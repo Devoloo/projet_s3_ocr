@@ -10,7 +10,7 @@ SRC = main.c Detection/segmentation.c Init/binarize.c Init/pixel_operations.c In
 OBJ = ${SRC:.c=.o}
 DEP = ${SRC:.c=.d}
 
-all: main xor
+all: main
 
 main: ${OBJ}
 xor: ${OBJ}
