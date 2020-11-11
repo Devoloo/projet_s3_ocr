@@ -90,6 +90,24 @@ int main()
 	    Uint32 pixel = get_pixel(image_surface,x,y);
 	    Uint8 r, g, b;
 	    SDL_GetRGB(pixel, image_surface->format, &r, &g, &b);
+	    Uint32 average = 0.3*r + 0.59*g + 0.11*b;	
+	    pixel = SDL_MapRGB(image_surface->format,average,average,average);
+	    put_pixel(image_surface,x,y,pixel);
+	    
+	}
+    }
+    
+    update_surface(screen_surface, image_surface);
+
+    wait_for_keypressed();
+
+    for(int x=0; x<width; x++)
+    {
+	for(int y=0;y<height; y++)
+	{
+	    Uint32 pixel = get_pixel(image_surface,x,y);
+	    Uint8 r, g, b;
+	    SDL_GetRGB(pixel, image_surface->format, &r, &g, &b);
 	    Uint32 average = (r+g+b)/3;
 	    if (average > 127) 
 	    {
