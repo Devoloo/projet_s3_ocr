@@ -8,20 +8,23 @@
 #include "Init/grey_level.h"
 #include "Detection/segmentation.h"
 #include "Init/image.h"
+#include "xor/xor.h"
 
 int main(int argc, char** argv)
 {
     if(argc < 2 )
-	errx(1, "Wrong argument : please writ of path of the image");
-    if(argc > 2)
-	errx(1, "Too many arguments");
-    else
+        errx(1, "Wrong argument : please writ of path of the image");
+    if(argc > 3)
+        errx(1, "Too many arguments");
+    if (argc == 2 && (strcmp(argv[1], "xor") == 0))
+        XOR();
+    if (argc == 3 && (strcmp(argv[1], "image") == 0))
     {
 	SDL_Surface* image_surface;
 	SDL_Surface* screen_surface;
 
 
-	image_surface = load_image(argv[1]);
+	image_surface = load_image(argv[2]);
 	screen_surface = display_image(image_surface);
 
 	// initialization 

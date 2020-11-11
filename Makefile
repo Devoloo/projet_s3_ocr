@@ -1,19 +1,19 @@
 # Simple SDL mini Makefile
 
 CC=gcc
-
 CPPFLAGS= `pkg-config --cflags sdl` -MMD
 CFLAGS= -Wall -Wextra -Werror -std=c99 -O3
 LDFLAGS=
-LDLIBS= `pkg-config --libs sdl` -lSDL_image
+LDLIBS= `pkg-config --libs sdl` -lSDL_image -lm
 
-SRC = main.c Detection/segmentation.c Init/binarize.c Init/pixel_operations.c Init/image.c Init/grey_level.c
+SRC = main.c Detection/segmentation.c Init/binarize.c Init/pixel_operations.c Init/image.c Init/grey_level.c xor/xor.c
 OBJ = ${SRC:.c=.o}
 DEP = ${SRC:.c=.d}
 
-all: main
+all: main xor
 
 main: ${OBJ}
+xor: ${OBJ}
 
 #main: main.o Detection/segmentation.c Init/binarize.c Init/pixel_operations.c Init/image.c Init/grey_level.c
 #main.o: Detection/segmentation.h Init/binarize.h Init/pixel_operations.h Init/image.h Init/grey_level.h

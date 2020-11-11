@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <string.h>
+#include "xor.h"
 
 #define SIZE_L1 2
 #define SIZE_L2 2
@@ -294,7 +295,7 @@ void Get_weights_saved(void)
 
 
 //------------------------------------------------Main------------------------------------------------------------------
-int main()
+int XOR()
 {
 
     //randomizer
