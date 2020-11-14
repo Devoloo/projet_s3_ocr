@@ -69,65 +69,70 @@ void wait_for_keypressed()
 void SDL_FreeSurface(SDL_Surface *surface);
 
 
-int main()
+int main(int argc, char** argv)
 {
-    SDL_Surface* image_surface;
-    SDL_Surface* screen_surface;
-
-    init_sdl();
-
-    image_surface = load_image("my_image.jpg");
-    screen_surface = display_image(image_surface);
-
-    wait_for_keypressed();
-
-    int width = image_surface->w;
-    int height = image_surface->h;
-    for(int x=0; x<width; x++)
+    if(argc < 2 )
+	errx(1, "Wrong argument : please writ of path of the image");
+    if(argc > 2)
+	errx(1, "Too many arguments");
+    else
     {
-	for(int y=0;y<height; y++)
-	{
-	    Uint32 pixel = get_pixel(image_surface,x,y);
-	    Uint8 r, g, b;
-	    SDL_GetRGB(pixel, image_surface->format, &r, &g, &b);
-	    Uint32 average = 0.3*r + 0.59*g + 0.11*b;	
-	    pixel = SDL_MapRGB(image_surface->format,average,average,average);
-	    put_pixel(image_surface,x,y,pixel);
-	    
-	}
-    }
-    
-    update_surface(screen_surface, image_surface);
+	SDL_Surface* image_surface;
+	SDL_Surface* screen_surface;
 
-    wait_for_keypressed();
+	init_sdl();
 
-    for(int x=0; x<width; x++)
-    {
-	for(int y=0;y<height; y++)
+	image_surface = load_image(argv[1]);
+	screen_surface = display_image(image_surface);
+
+	wait_for_keypressed();
+
+	int width = image_surface->w;
+	int height = image_surface->h;
+
+	for(int x=0; x<width; x++)
 	{
-	    Uint32 pixel = get_pixel(image_surface,x,y);
-	    Uint8 r, g, b;
-	    SDL_GetRGB(pixel, image_surface->format, &r, &g, &b);
-	    Uint32 average = (r+g+b)/3;
-	    if (average > 127) 
+	    for(int y=0;y<height; y++)
 	    {
-		pixel = SDL_MapRGB(image_surface->format, 255, 255, 255);
-		put_pixel(image_surface,x,y,pixel);
-	    }
-	    else
-	    {	    	
-		pixel = SDL_MapRGB(image_surface->format,0,0,0);
-	    	put_pixel(image_surface,x,y,pixel);
+		Uint32 pixel = get_pixel(image_surface,x,y);
+		Uint8 r, g, b;
+		SDL_GetRGB(pixel, image_surface->format, &r, &g, &b);
+		Uint32 average = 0.3*r + 0.59*g + 0.11*b;	
+		pixel = SDL_MapRGB(image_surface->format,average,average,average);
+		put_pixel(image_surface,x,y,pixel);    
 	    }
 	}
+	    
+	update_surface(screen_surface, image_surface);
+
+	wait_for_keypressed();
+
+	for(int x=0; x<width; x++)
+	{
+	    for(int y=0;y<height; y++)
+	    {
+		Uint32 pixel = get_pixel(image_surface,x,y);
+		Uint8 r, g, b;
+		SDL_GetRGB(pixel, image_surface->format, &r, &g, &b);
+		if (r > 127) 
+		{
+		    pixel = SDL_MapRGB(image_surface->format, 255, 255, 255);
+		    put_pixel(image_surface,x,y,pixel);
+		}
+		else
+		{	    	
+		    pixel = SDL_MapRGB(image_surface->format,0,0,0);
+		    put_pixel(image_surface,x,y,pixel);
+		}
+	    }
+	}
+	   
+	update_surface(screen_surface, image_surface);
+
+        wait_for_keypressed();
+
+	SDL_FreeSurface (image_surface);
+	SDL_FreeSurface (screen_surface);
     }
-   
-    update_surface(screen_surface, image_surface);
-
-    wait_for_keypressed();
-
-    SDL_FreeSurface (image_surface);
-    SDL_FreeSurface (screen_surface);
-
     return 0;
 }
