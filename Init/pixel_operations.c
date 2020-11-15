@@ -39,6 +39,7 @@ Uint32 get_pixel(SDL_Surface *surface, unsigned x, unsigned y)
 
 void put_pixel(SDL_Surface *surface, unsigned x, unsigned y, Uint32 pixel)
 {
+    //update a pixel in the SDL_Surface *surface with new values
     Uint8 *p = pixel_ref(surface, x, y);
 
     switch(surface->format->BytesPerPixel)
@@ -74,6 +75,7 @@ void put_pixel(SDL_Surface *surface, unsigned x, unsigned y, Uint32 pixel)
 
 void update_surface(SDL_Surface* screen, SDL_Surface* image)
 {
+    //make the update with new values from put_pixel
     if (SDL_BlitSurface(image, NULL, screen, NULL) < 0)
         warnx("BlitSurface error: %s\n", SDL_GetError());
 

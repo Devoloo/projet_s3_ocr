@@ -15,12 +15,14 @@ void grey_level (SDL_Surface* image_surface)
     {
 	for(int y=0;y<height; y++)
 	{
+	    //for each pixel in the image
 	    Uint32 pixel = get_pixel(image_surface,x,y);
 	    Uint8 r, g, b;
 	    SDL_GetRGB(pixel, image_surface->format, &r, &g, &b);
-	    Uint32 average = 0.3*r + 0.59*g + 0.11*b;	
+	    Uint32 average = 0.3*r + 0.59*g + 0.11*b; //average among CIE 601 recomandation	
 	    pixel = SDL_MapRGB(image_surface->format,average,average,average);
-	    put_pixel(image_surface,x,y,pixel);    
+	    put_pixel(image_surface,x,y,pixel); 
+	    // all composants of the pixel have the same value : the average   
 	}
     }
 }    

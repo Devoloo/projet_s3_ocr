@@ -12,14 +12,16 @@
 
 int main(int argc, char** argv)
 {
-    if(argc < 2 )
+    if(argc < 2 ) //not enough arguments
         errx(1, "Wrong argument : please writ of path of the image");
-    if(argc > 3)
+    if(argc > 3)//if they are more than 2 arguments after the ./main
         errx(1, "Too many arguments");
     if (argc == 2 && (strcmp(argv[1], "xor") == 0))
         XOR();
+        //if the argument is "xor" launch the xor IA
     if (argc == 3 && (strcmp(argv[1], "image") == 0))
     {
+        //if they're 3 arguments and the 2nd is "image", launch the binarization and detection with the 3rd argument
 	SDL_Surface* image_surface;
 	SDL_Surface* screen_surface;
 
@@ -43,7 +45,7 @@ int main(int argc, char** argv)
 	   
 	update_surface(screen_surface, image_surface);
 
-        // change the image in black or white
+        // binarize the image
 
 	wait_for_keypressed();
 
@@ -58,7 +60,7 @@ int main(int argc, char** argv)
 	SDL_FreeSurface (image_surface);
 	SDL_FreeSurface (screen_surface);
 
-	// clean the screen	
+	// clean the screen and free memory places	
     }
     return 0;
 }

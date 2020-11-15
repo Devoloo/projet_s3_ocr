@@ -22,7 +22,7 @@ SDL_Surface* display_image(SDL_Surface *img)
 {
     SDL_Surface *screen;
 
-    // Set the window to the same size as the image
+    // Set the window with the same size as the image
     screen = SDL_SetVideoMode(img->w, img->h, 0, SDL_SWSURFACE|SDL_ANYFORMAT);
     if (screen == NULL)
     {
@@ -59,4 +59,4 @@ void wait_for_keypressed()
     } while(event.type != SDL_KEYUP);
 }
 
-void SDL_FreeSurface(SDL_Surface *surface);
+void SDL_FreeSurface(SDL_Surface *surface); //free memory space and close the window
