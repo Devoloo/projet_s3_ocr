@@ -29,7 +29,7 @@ double learning_rate = 0.8; //learning rate
 
 
 
-//variables utilise temporairement pendant la retropropagation
+//variables used temporarely while the backpropagation
 double L3_der_err_der_y[1]; //output value derivatives
 double L3_der_err_der_x[1]; //derivatives of the input to the final layer
 double L2_der_err_der_w[2]; //derivatives of the weights from L2 to L3
@@ -41,7 +41,7 @@ double L1_suggested_weight_changes[4];
 
 
 
-//-------------------------------Fonctions utilisées--------------------------------------------------------------------
+//-------------------------------Used Fonctions--------------------------------------------------------------------
 
 double rand_doubles(double min, double max);
 void fill_hyperparams_with_rand(void);
@@ -54,7 +54,7 @@ void test(void);
 void reset_nn(void);
 
 
-//--------------------------------Fonction Sigmoid----------------------------------------------------------------------
+//--------------------------------Sigmoid Fonction----------------------------------------------------------------------
 
 double sigmoid(double x)
 {
@@ -62,9 +62,9 @@ double sigmoid(double x)
 }
 
 
-//-------------------------------Propagation avant----------------------------------------------------------------------
+//-------------------------------Feed_forward----------------------------------------------------------------------
 
-void feed_forward(void) //Multiplie nos valeurs d'entrees par les poids puis utilise la fct sigmoide sur ce resultat
+void feed_forward(void) // Multiplication between inpunts and weigts then use the sigmoid fonction on the result
 {
     int i = 0;
     int j = 0;
@@ -72,20 +72,20 @@ void feed_forward(void) //Multiplie nos valeurs d'entrees par les poids puis uti
     for (i = 0; i < SIZE_L1; i++)
     {
         for (j = 0; j < SIZE_L2; j++)
-            L2[i] += L1_to_L2_weights[(j * 2) + i] * input_ptr[j];       //Multiplication matricielle
+            L2[i] += L1_to_L2_weights[(j * 2) + i] * input_ptr[j];
 
-        sigL2[i] = sigmoid(L2[i]);                                      //On obtient nos valeurs cachés
+        sigL2[i] = sigmoid(L2[i]);
     }
 
     for (i = 0; i < SIZE_L2; i++)
-        L3[0] += L2_to_L3_weights[i] * sigL2[i];                        //Multiplication matricielle
+        L3[0] += L2_to_L3_weights[i] * sigL2[i];
 
-    sigL3[0] = sigmoid(L3[0]);                                      //On obtient l'output
+    sigL3[0] = sigmoid(L3[0]);
 }
 
 
 
-//---------------------------------------Update des couches L1 et L2----------------------------------------------------
+//---------------------------------------Update of weights of layer L1 and L2----------------------------------------------------
 
 void L1_weight_updater(void)
 {
@@ -102,7 +102,7 @@ void L2_weight_updater(void)
 
 //----------------------------------------------------------------------------------------------------------------------
 
-//Reset les neurones
+
 void reset_nn(void)
 {
     for(int i = 0; i < L1_WEIGHTS; i++)
@@ -115,9 +115,9 @@ void reset_nn(void)
 
 
 
-//----------------------------------------Rétropropagation--------------------------------------------------------------
+//----------------------------------------Backpropagation--------------------------------------------------------------
 
-//Retropropagation (Fais la propagation avant puis corrige le poids des synapses)
+//Backpropagation (DO the feed forward then change the weights of synapses)
 void backprop(void)
 {
     int i = 0;
@@ -132,17 +132,17 @@ void backprop(void)
             feed_forward(); //run through the network
 
             //find derivatives of final output, (Y_output - Y_expected)
-            //Calcule la marge d'erreur
+            //Find the margin of error
             L3_der_err_der_y[0] = sigL3[0] - train_answr_key[train_number];
 
             //find derivatives of the input to the final layer
-            //Calcule l'erreur delta, c'est l'erreur multiplié par la dérivé de la sigmoid.
+            //Calculated the delta error, It's the error multiplicated by the derivative of the sigmoid
             L3_der_err_der_x[0] = (sigL3[0] * (1 - sigL3[0])) *
                                   L3_der_err_der_y[0]; //sigL3[0]*(1-sigL3[0])) is derivative of the sigmoid
 
 
             //derivative of weights from L2 to L3
-            // calcule l'erreur delta des neurones cachés
+            // Calulated the delta error delta of the second layer
             for (i = 0; i < SIZE_L2; i++)
                 L2_der_err_der_w[i] = sigL2[i] * L3_der_err_der_x[0];
 
@@ -199,7 +199,7 @@ void backprop(void)
 }
 
 
-//-----------------------------------------------Fonction de test-------------------------------------------------------
+//-----------------------------------------------Test fonction-------------------------------------------------------
 
 void test(void)
 {
@@ -239,9 +239,9 @@ void fill_hyperparams_with_rand(void)
 
 
 
-//---------------------------------------------Sauvegarde des poids-----------------------------------------------------
+//---------------------------------------------The backup of weights-----------------------------------------------------
 
-//Sauvegarde les poids dans un fichier txt
+//it saves the weights in a file txt
 void Save_weights(void)
 {
     FILE *file;
@@ -267,7 +267,7 @@ void Save_weights(void)
     fclose(file);
 }
 
-//Récupère les poids du fichier txt (je crois que ça sert a rien mdr)
+//Recover the weights of the file txt
 void Get_weights_saved(void)
 {
     FILE *file;
