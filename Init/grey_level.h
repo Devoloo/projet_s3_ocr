@@ -1,11 +1,11 @@
-#ifndef BINARIZE_H
-#define BINARIZE_H
+#ifndef GREY_LEVEL_H
+#define GREY_LEVEL_H
 
 #include<stdlib.h>
 #include<stdio.h>
 #include<err.h>
 #include<SDL/SDL_image.h>
 
-void binarize (SDL_Surface* image_surface);
+void grey_level (SDL_Surface* image_surface);
 
 #endif

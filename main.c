@@ -1,10 +1,13 @@
+#include<stdio.h>
+#include<stdlib.h>
 #include <err.h>
 #include "SDL/SDL.h"
 #include "SDL/SDL_image.h"
-#include "pixel_operations.h"
-#include "binarize.h"
-#include "segmentation.h"
-#include "image.h"
+#include "Init/pixel_operations.h"
+#include "Init/binarize.h"
+#include "Init/grey_level.h"
+#include "Detection/segmentation.h"
+#include "Init/image.h"
 
 int main(int argc, char** argv)
 {
@@ -17,7 +20,6 @@ int main(int argc, char** argv)
 	SDL_Surface* image_surface;
 	SDL_Surface* screen_surface;
 
-	init_sdl();
 
 	image_surface = load_image(argv[1]);
 	screen_surface = display_image(image_surface);
