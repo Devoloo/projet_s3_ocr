@@ -3,12 +3,15 @@
 <interface>
   <requires lib="gtk+" version="3.20"/>
   <object class="GtkTextBuffer" id="textbuffer1">
-    <property name="text" translatable="yes">		1. Choose an image 
-		2. Use the image treatment
-		3. Train the AI
-		4. Lunch OCR
-		5. Save the text in a .txt file 
-		   where you want</property>
+    <property name="text" translatable="yes">1. Choose an image
+
+2. Use the image treatment
+
+3. Train the AI
+
+4. Lunch our OCR
+
+5. Save the text in a .txt file where you want</property>
   </object>
   <object class="GtkWindow" id="main_window">
     <property name="name">main_window</property>
@@ -16,7 +19,7 @@
     <property name="window-position">center</property>
     <property name="default-width">480</property>
     <property name="default-height">350</property>
-    <property name="icon">logo/logo.png</property>
+    <property name="icon">logo/logohaut.png</property>
     <signal name="destroy" handler="gtk_main_quit" swapped="no"/>
     <child>
       <object class="GtkBox" id="box1">
@@ -126,7 +129,6 @@
           <object class="GtkBox" id="box2">
             <property name="visible">True</property>
             <property name="can-focus">False</property>
-            <property name="orientation">vertical</property>
             <child>
               <object class="GtkImage" id="image">
                 <property name="visible">True</property>
@@ -154,6 +156,10 @@
               <object class="GtkTextView" id="text_viewer">
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
+                <property name="left-margin">10</property>
+                <property name="right-margin">10</property>
+                <property name="top-margin">10</property>
+                <property name="bottom-margin">10</property>
                 <property name="buffer">textbuffer1</property>
                 <property name="monospace">True</property>
               </object>
@@ -232,7 +238,7 @@ Launch OCR !
             </child>
           </object>
           <packing>
-            <property name="expand">False</property>
+            <property name="expand">True</property>
             <property name="fill">True</property>
             <property name="position">2</property>
           </packing>
