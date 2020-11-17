@@ -32,22 +32,21 @@ void save_text(GtkButton *button, GtkTextBuffer *buffer)
 void load_image(GtkButton *button, GtkImage *image)
 {
   if(strcmp(filename,"") == 0)
-    return;
+    	return;
   UNUSED(button);
-	SDL_Surface *img = IMG_Load((char *)filename);
-	if(img->w > 576 && img->h > 460)
-	{
+  SDL_Surface *img = IMG_Load((char *)filename);
+  if(img->w > 576 && img->h > 460)
+  {
+  	printf("Need Resize \n");
 
-		printf("Need Resize \n");
+	SDL_Surface *new = Resize(img);
 
-		SDL_Surface *new = Resize(img);
+	SDL_SaveBMP(new,"image_resize");
 
-		SDL_SaveBMP(new,"image_resize");
-
-		gtk_image_set_from_file (GTK_IMAGE (image), "image_resize");
-	}
-	else
-    	gtk_image_set_from_file (GTK_IMAGE (image), filename);
+	gtk_image_set_from_file (GTK_IMAGE (image), "image_resize");
+  }
+  else
+  	gtk_image_set_from_file (GTK_IMAGE (image), filename);
 }
 
 //Colors for print
@@ -93,7 +92,7 @@ int trainNN()
 					else
 					{
 							printf("Epoch %-5d | MaxErrorRate = %s %f \n",
-                      epoch,KGRN,net->MaxErrorRate);
+                      					epoch,KGRN,net->MaxErrorRate);
 					}
 					printf("%s",KWHT);
 			}
@@ -103,9 +102,9 @@ int trainNN()
       }
 			net -> MaxErrorRate = 0.0;
 	}
-  printf("Save data...\n");
+  	printf("Save data...\n");
 	SaveData(net);
-  printf("Learn finish\n");
+  	printf("Learn finish\n");
 	return EXIT_SUCCESS;
 }
 void openFile(GtkButton *button, GtkLabel *text_label)
@@ -113,7 +112,7 @@ void openFile(GtkButton *button, GtkLabel *text_label)
   GtkWidget *label = (GtkWidget *) text_label;
 	GtkWidget *toplevel = gtk_widget_get_toplevel (GTK_WIDGET(button));
 
-	GtkWidget *dialog = gtk_file_chooser_dialog_new (("Open image"),
+	GtkWidget *dialog = gtk_file_chooser_dialog_new (("Choose image"),
 	                                                GTK_WINDOW (toplevel),
 	                                                GTK_FILE_CHOOSER_ACTION_OPEN,
 	                                                "Open", GTK_RESPONSE_ACCEPT,
@@ -125,7 +124,7 @@ void openFile(GtkButton *button, GtkLabel *text_label)
 		case GTK_RESPONSE_ACCEPT:
 		{
 			filename = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (dialog));
-      gtk_label_set_text(GTK_LABEL(label),filename);
+      			gtk_label_set_text(GTK_LABEL(label),filename);
 			break;
 		}
 		default:
@@ -169,20 +168,20 @@ int launchOCR(GtkButton *button, GtkTextBuffer *buffer)
 void create_window(int argc, char *argv[])
 {
 	//Init variables
-    GtkWidget *main_window;
+    	GtkWidget *main_window;
 	SGlobalData data;
 	//Init GTK
 	gtk_init(&argc, &argv);
 	//Build from .glade
-  data.builder = gtk_builder_new();
-  gtk_builder_add_from_file(data.builder, "main.glade", NULL);
+  	data.builder = gtk_builder_new();
+  	gtk_builder_add_from_file(data.builder, "main.glade", NULL);
 	//Get main_window
 	main_window =  GTK_WIDGET(gtk_builder_get_object(data.builder,"main_window"));
-  parent = main_window;
+  	parent = main_window;
 	//Connect signals
 	gtk_builder_connect_signals(data.builder, &data);
 
-  gtk_window_set_title(GTK_WINDOW(main_window), "OCR");
-  gtk_widget_show_all(main_window);
-  gtk_main();
+  	gtk_window_set_title(GTK_WINDOW(main_window), "OCR");
+  	gtk_widget_show_all(main_window);
+  	gtk_main();
 }
