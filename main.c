@@ -17,7 +17,7 @@ int main(int argc, char *argv[])
     else
     {
       printf("#-----------------------#\n");
-      printf(".........................\n");
+      printf("        Using OCR        \n");
       printf("#-----------------------#\n");
       //Create GTK window
       create_window(argc,argv);

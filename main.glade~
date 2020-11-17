@@ -62,6 +62,7 @@
                         <property name="valign">baseline</property>
                         <property name="margin-top">7</property>
                         <property name="margin-bottom">5</property>
+                        <property name="label" translatable="yes">No file choose</property>
                       </object>
                       <packing>
                         <property name="expand">False</property>

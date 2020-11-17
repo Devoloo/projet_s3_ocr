@@ -182,7 +182,7 @@ void create_window(int argc, char *argv[])
 	//Connect signals
 	gtk_builder_connect_signals(data.builder, &data);
 
-  gtk_window_set_title(GTK_WINDOW(main_window), "EpiRead");
+  gtk_window_set_title(GTK_WINDOW(main_window), "OCR");
   gtk_widget_show_all(main_window);
   gtk_main();
 }
