@@ -3,12 +3,12 @@
 <interface>
   <requires lib="gtk+" version="3.20"/>
   <object class="GtkTextBuffer" id="textbuffer1">
-    <property name="text" translatable="yes">    1. Choose an image 
-           2. Use the image treatment
-3. Train the AI
- 4. Lunch our OCR
-		 5. Save the text in a .txt file 
-     where you want</property>
+    <property name="text" translatable="yes">		1. Choose an image 
+		2. Use the image treatment
+		3. Train the AI
+		4. Lunch OCR
+		5. Save the text in a .txt file 
+		   where you want</property>
   </object>
   <object class="GtkWindow" id="main_window">
     <property name="name">main_window</property>
@@ -154,7 +154,6 @@
               <object class="GtkTextView" id="text_viewer">
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
-                <property name="justification">center</property>
                 <property name="buffer">textbuffer1</property>
                 <property name="monospace">True</property>
               </object>
