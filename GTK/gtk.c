@@ -10,12 +10,16 @@ void create_window(int argc, char *argv[])
 	SGlobalData data;
 	//Init GTK
 	gtk_init(&argc, &argv);
+	
 	//Build from .glade
   data.builder = gtk_builder_new();
   gtk_builder_add_from_file(data.builder, "main.glade", NULL);
+	
 	//Get main_window
 	main_window =  GTK_WIDGET(gtk_builder_get_object(data.builder,"main_window"));
+	
   parent = main_window;
+  
 	//Connect signals
 	gtk_builder_connect_signals(data.builder, &data);
 
