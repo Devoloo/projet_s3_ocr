@@ -11,7 +11,7 @@
 #include "xor/xor.h"
 #include "Init/noise_reduction.h"
 #include "GTK/gtks.h"
-#inculde "neural_network.h"
+//#inculde "neural_network.h"
 
 int main(int argc, char** argv)
 {
