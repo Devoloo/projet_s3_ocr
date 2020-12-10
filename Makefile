@@ -1,26 +1,20 @@
-# Simple SDL mini Makefile
+#Makefile
+#Authors : antoine.montes
 
-CC=gcc
-CPPFLAGS= `pkg-config --cflags sdl gtk+-3.0` -MMD
-CFLAGS= -Wall -Wextra -Werror -std=c99 -O3 -g
-LDFLAGS=
-LDLIBS= `pkg-config  --libs gtk+-3.0 sdl` -lSDL_image -lm
+CC=gcc -rdynamic
 
-SRC = main.c Detection/segmentation.c Init/binarize.c Init/pixel_operations.c Init/image.c Init/grey_level.c Init/noise_reduction.c GTK/gtk.c #xor/xor.c
-OBJ = ${SRC:.c=.o}
-DEP = ${SRC:.c=.d}
+CPPFLAGS =  `pkg-config gtk+-3.0 --cflags sdl` -MMD
+CFLAGS = -Wall -Wextra -std=c99 -g
+LDFLAGS =
+LDLIBS= `pkg-config gtk+-3.0 --libs sdl` -lSDL_image -lm
+
+SRC = main.c ImageTreatment/image_operations.c Tools/tools.c ImageTreatment/segmentation.c GTK/gtk.c NeuralNetwork/neural_network_XOR.c	NeuralNetwork/neural_network.c NeuralNetwork/neural_network_tools.c Detection/detect_char.c
+OBJ= $(SRC:.c=.o)
+DEP= $(SRC:.c=.d)
 
 all: main
 
-main: ${OBJ}
-xor: ${OBJ}
-
-#main: main.o Detection/segmentation.c Init/binarize.c Init/pixel_operations.c Init/image.c Init/grey_level.c
-#main.o: Detection/segmentation.h Init/binarize.h Init/pixel_operations.h Init/image.h Init/grey_level.h
+main: $(OBJ)
 
 clean:
-	${RM} ${OBJ}
-	${RM} ${DEP}
-	${RM} main
-
-# END
+		$(RM) $(OBJ) $(OBJ_TESTS) $(DEP) $(DEP_TESTS) main && clear

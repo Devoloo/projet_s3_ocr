@@ -1,9 +1,9 @@
-#include "gtks.h"
+# include "gtk.h"
+
 
 gchar *filename = "";
 char *text = "";
 GtkWidget *parent;
-
 void save_text(GtkButton *button, GtkTextBuffer *buffer)
 {
   UNUSED(button);
@@ -29,7 +29,6 @@ void save_text(GtkButton *button, GtkTextBuffer *buffer)
   gtk_widget_destroy (dialog);
 
 }
-
 void load_image(GtkButton *button, GtkImage *image)
 {
   if(strcmp(filename,"") == 0)
@@ -40,11 +39,11 @@ void load_image(GtkButton *button, GtkImage *image)
 	{
 
 		printf("Need Resize \n");
-		//SDL_Surface *new = imageResize(img,576,460);
+
 		SDL_Surface *new = Resize(img);
 
 		SDL_SaveBMP(new,"image_resize");
-    //SDL_FreeSurface(new);
+
 		gtk_image_set_from_file (GTK_IMAGE (image), "image_resize");
 	}
 	else
@@ -62,7 +61,6 @@ int trainNN()
 	int nbEpoch = 5000;
 	int nbLetters = 26 * 1 + 26 * 1; //5 fonts for uppers & 4 for lowers
 	int currentChar = 0;
-	//int count = 0;
 	srand(time(NULL));
 
 	//Intialize network
@@ -85,7 +83,6 @@ int trainNN()
 					{
 							PrintState(net);
 					}
-					//count++;
 			}
 			//== PRINT ERROR EVERY 100 EPOCHs ==//
 			if (epoch % 100 == 0)
@@ -97,7 +94,6 @@ int trainNN()
 					{
 							printf("Epoch %-5d | MaxErrorRate = %s %f \n",
                       epoch,KGRN,net->MaxErrorRate);
-							// canSave = 1;
 					}
 					printf("%s",KWHT);
 			}
@@ -112,21 +108,17 @@ int trainNN()
   printf("Learn finish\n");
 	return EXIT_SUCCESS;
 }
-
 void openFile(GtkButton *button, GtkLabel *text_label)
 {
   GtkWidget *label = (GtkWidget *) text_label;
 	GtkWidget *toplevel = gtk_widget_get_toplevel (GTK_WIDGET(button));
-	//GtkFileFilter *filter = gtk_file_filter_new ();
+
 	GtkWidget *dialog = gtk_file_chooser_dialog_new (("Open image"),
 	                                                GTK_WINDOW (toplevel),
 	                                                GTK_FILE_CHOOSER_ACTION_OPEN,
 	                                                "Open", GTK_RESPONSE_ACCEPT,
 	                                                "Cancel", GTK_RESPONSE_CANCEL,
 	                                                NULL);
-
-	//gtk_file_filter_add_pixbuf_formats (filter);
-	//gtk_file_chooser_add_filter (GTK_FILE_CHOOSER (dialog),filter);
 
 	switch (gtk_dialog_run (GTK_DIALOG (dialog)))
 	{
@@ -152,22 +144,22 @@ int launchOCR(GtkButton *button, GtkTextBuffer *buffer)
 	SDL_Init(SDL_INIT_VIDEO);
 	printf("%s \n ",filename);
 	SDL_Surface *img = IMG_Load((char *)filename);
-	//display_image(img);
 
-	grey_level(img);
+	greyscale(img);
 	printf("Greyscale \n");
-	//display_image(img);
 
-	binarize(img);
+	blacknwhite(img);
 	printf("Black and white \n");
-	//display_image(img);
 
-	SDL_Surface *image_cut = lines(img);
+	SDL_Surface *image_cut = lineCut(img);
 	printf("Line Cuts\n");
-	//display_image(image_cut);
-
-	// mettez l'ia ici
-
+	printf("Character cuts\n");
+  struct Neural_Network *net = ExtractData();
+  printf("Extract Data Done \n");
+	isolateLine(image_cut,net);
+  printf("Isolate Line Done \n");
+  gtk_text_buffer_set_text (buffer,net->str,strlen(net->str));
+  text = net->str;
 	printf("Finish Treatment\n");
 
 	SDL_Quit();
@@ -177,24 +169,20 @@ int launchOCR(GtkButton *button, GtkTextBuffer *buffer)
 void create_window(int argc, char *argv[])
 {
 	//Init variables
-  GtkWidget *main_window;
+    GtkWidget *main_window;
 	SGlobalData data;
 	//Init GTK
 	gtk_init(&argc, &argv);
-	
 	//Build from .glade
   data.builder = gtk_builder_new();
   gtk_builder_add_from_file(data.builder, "main.glade", NULL);
-	
 	//Get main_window
 	main_window =  GTK_WIDGET(gtk_builder_get_object(data.builder,"main_window"));
-	
   parent = main_window;
-  
 	//Connect signals
 	gtk_builder_connect_signals(data.builder, &data);
 
-  gtk_window_set_title(GTK_WINDOW(main_window), "OCR");
+  gtk_window_set_title(GTK_WINDOW(main_window), "EpiRead");
   gtk_widget_show_all(main_window);
   gtk_main();
 }
