@@ -1,12 +1,12 @@
 # Simple SDL mini Makefile
 
 CC=gcc
-CPPFLAGS= `pkg-config --cflags sdl` -MMD
-CFLAGS= -Wall -Wextra -Werror -std=c99 -O3
+CPPFLAGS= `pkg-config --cflags sdl gtk+-3.0` -MMD
+CFLAGS= -Wall -Wextra -Werror -std=c99 -O3 -g
 LDFLAGS=
-LDLIBS= `pkg-config --libs sdl` -lSDL_image -lm
+LDLIBS= `pkg-config  --libs gtk+-3.0 sdl` -lSDL_image -lm
 
-SRC = main.c Detection/segmentation.c Init/binarize.c Init/pixel_operations.c Init/image.c Init/grey_level.c xor/xor.c
+SRC = main.c Detection/segmentation.c Init/binarize.c Init/pixel_operations.c Init/image.c Init/grey_level.c Init/noise_reduction.c GTK/gtk.c #xor/xor.c
 OBJ = ${SRC:.c=.o}
 DEP = ${SRC:.c=.d}
 
