@@ -197,7 +197,7 @@ void PrintState(struct Neural_Network *net)
                     output, PosGoal(net -> Goal),KRED);
 
   printf("%s",KWHT);
-  
+
   printf("Char entered: %c -> Char recognized: %c | Error rate: %f |\n",
                                                     goalChar,
                                                     recognizedChar,

@@ -38,6 +38,9 @@ void load_image(GtkButton *button, GtkImage *image)
     if(img->w > 576 && img->h > 460)
     {
         SDL_Surface *new = Resize(img);
+
+        SDL_SaveBMP(new,"image_resize");
+
         gtk_image_set_from_file (GTK_IMAGE (image), "image_resize");
     }
     else
@@ -81,10 +84,10 @@ int trainNN()
 	    if (epoch % 100 == 0)
 	    {
 	        if(net -> MaxErrorRate > 0.005)
-	            printf("Epoch %-5d | MaxErrorRate = %s %f \n", epoch,KRED,net->MaxErrorRate);
+	            printf("Epoch %-5d | Error Rate = %s %f \n", epoch,KRED,net->MaxErrorRate);
 	        else
 	            {
-	            printf("Epoch %-5d | MaxErrorRate = %s %f \n", epoch,KGRN,net->MaxErrorRate);
+	            printf("Epoch %-5d | Erro rRate = %s %f \n", epoch,KGRN,net->MaxErrorRate);
 	            }
 	        printf("%s",KWHT);
 	    }
@@ -134,7 +137,7 @@ int launchOCR(GtkButton *button, GtkTextBuffer *buffer)
     }
     UNUSED(button);
 	SDL_Init(SDL_INIT_VIDEO);
-
+	printf("%s \n ",filename);
 	SDL_Surface *img = IMG_Load((char *)filename);
 
 	greyscale(img);
@@ -142,14 +145,10 @@ int launchOCR(GtkButton *button, GtkTextBuffer *buffer)
 	blacknwhite(img);
 
 	SDL_Surface *image_cut = lineCut(img);
-
     struct Neural_Network *net = ExtractData();
-
 	isolateLine(image_cut,net);
-
 	gtk_text_buffer_set_text (buffer,net->str,strlen(net->str));
 	text = net->str;
-
 
 	SDL_Quit();
 	return EXIT_SUCCESS;
