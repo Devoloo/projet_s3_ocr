@@ -54,7 +54,7 @@ void load_image(GtkButton *button, GtkImage *image)
 #define KGRN  "\x1B[32m"
 #define KWHT  "\x1B[37m"
 
-int trainNN(GtkButton *button)
+int trainNN()
 {
     //Variables
 	int nbEpoch = 5000;
