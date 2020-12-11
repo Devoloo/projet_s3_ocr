@@ -37,12 +37,7 @@ void load_image(GtkButton *button, GtkImage *image)
     SDL_Surface *img = IMG_Load((char *)filename);
     if(img->w > 576 && img->h > 460)
     {
-        printf("Need Resize \n");
-
         SDL_Surface *new = Resize(img);
-
-        SDL_SaveBMP(new,"image_resize");
-
         gtk_image_set_from_file (GTK_IMAGE (image), "image_resize");
     }
     else
@@ -99,7 +94,7 @@ int trainNN()
 	    }
 	    net -> MaxErrorRate = 0.0;
 	}
-	printf("Save data...\n");
+	printf("Saving data...\n");
 	SaveData(net);
   	printf("Learn finish\n");
 
@@ -139,25 +134,22 @@ int launchOCR(GtkButton *button, GtkTextBuffer *buffer)
     }
     UNUSED(button);
 	SDL_Init(SDL_INIT_VIDEO);
-	printf("%s \n ",filename);
+
 	SDL_Surface *img = IMG_Load((char *)filename);
 
 	greyscale(img);
-	printf("Greyscale \n");
 
 	blacknwhite(img);
-	printf("Black and white \n");
 
 	SDL_Surface *image_cut = lineCut(img);
-	printf("Line Cuts\n");
-	printf("Character cuts\n");
+
     struct Neural_Network *net = ExtractData();
-    printf("Extract Data Done \n");
+
 	isolateLine(image_cut,net);
-	printf("Isolate Line Done \n");
+
 	gtk_text_buffer_set_text (buffer,net->str,strlen(net->str));
 	text = net->str;
-	printf("Finish Treatment\n");
+
 
 	SDL_Quit();
 	return EXIT_SUCCESS;

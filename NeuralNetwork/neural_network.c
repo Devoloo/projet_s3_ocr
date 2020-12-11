@@ -198,10 +198,12 @@ void PrintState(struct Neural_Network *net)
 
   printf("%s",KWHT);
 
-  printf("Char entered: %c | Char recoginized: %c | ErrorRate: %f\n",
-                                                    goalChar,
-                                                    recognizedChar,
-                                                    net -> ErrorRate);
+  if (net -> ErrorRate > 0.005)
+      printf("Char entered: %c -> Char recognized: %c | Error rate: %s%f |\n",goalChar,recognizedChar,net -> ErrorRate, KRED);
+  else
+      printf("Char entered: %c -> Char recognized: %c | Error rate: %s%f |\n",goalChar,recognizedChar,net -> ErrorRate, KGRN);
+
+  printf("%s",KWHT);
 }
 
 void Neural_Network_OCR(struct Neural_Network *net, double *input, double *goal)
