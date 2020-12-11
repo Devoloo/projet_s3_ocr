@@ -54,15 +54,21 @@ void load_image(GtkButton *button, GtkImage *image)
 #define KGRN  "\x1B[32m"
 #define KWHT  "\x1B[37m"
 
-int trainNN()
+int trainNN(GtkButton *button)
 {
+    //Button initialize
+    gtk_button_set_label(*button, "On training");
+    gtk_widget_set_sensitive((GtkWidget) *button, FALSE);
+
+    printf("On training\n");
+
     //Variables
 	int nbEpoch = 5000;
 	int nbLetters = 26 * 1 + 26 * 1; //5 fonts for uppers & 4 for lowers
 	int currentChar = 0;
 	srand(time(NULL));
 
-	//Intialize network
+	//Initialize network
 	struct Neural_Network *net = InitializeNetwork();
 
 	//Initialize all goals & letters
@@ -102,6 +108,11 @@ int trainNN()
 	printf("Save data...\n");
 	SaveData(net);
   	printf("Learn finish\n");
+
+    //Button Finish
+    gtk_button_set_label(*button, "Learn finish");
+    gtk_widget_set_sensitive((GtkWidget) *button, TRUE);
+
 	return EXIT_SUCCESS;
 }
 void openFile(GtkButton *button, GtkLabel *text_label)
