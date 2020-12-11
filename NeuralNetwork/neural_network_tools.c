@@ -128,7 +128,7 @@ char RetrieveChar(int val)
 //WeightIH - WeightHO - BiasH - BiasO
 void SaveData(struct Neural_Network *net)
 {
-  FILE* weightIH = fopen("weightIH.w", "w");
+  FILE* weightIH = fopen("bias_weight/weightIH.w", "w");
   for(int i = 0; i < net -> nbInput; ++i)
   {
     for(int h = 0; h < net -> nbHidden; ++h)
@@ -138,7 +138,7 @@ void SaveData(struct Neural_Network *net)
   }
   fclose(weightIH);
 
-  FILE* weightHO = fopen("weightHO.w", "w");
+  FILE* weightHO = fopen("bias_weight/weightHO.w", "w");
   for(int h = 0; h < net -> nbHidden; ++h)
   {
     for(int o = 0; o < net -> nbOutput; ++o)
@@ -148,14 +148,14 @@ void SaveData(struct Neural_Network *net)
   }
   fclose(weightHO);
 
-  FILE* biasH = fopen("biasH.b", "w");
+  FILE* biasH = fopen("bias_weight/biasH.b", "w");
   for(int h = 0; h < net -> nbHidden; ++h)
   {
     fprintf(biasH, "%f\n", net -> BiasH[h]);
   }
   fclose(biasH);
 
-  FILE* biasO = fopen("biasO.b", "w");
+  FILE* biasO = fopen("bias_weight/biasO.b", "w");
   for (int o = 0; o < net -> nbOutput; ++o)
   {
     fprintf(biasO, "%f\n", net -> BiasO[o]);
@@ -179,7 +179,7 @@ struct Neural_Network* ExtractData ()
   char *line = calloc(15, sizeof(char));
 
   //WeightIH
-  FILE* weightIH = fopen("weightIH.w", "r");
+  FILE* weightIH = fopen("bias_weight/weightIH.w", "r");
   for(int i = 0; i < net -> nbInput; ++i)
   {
     for(int h = 0; h < net -> nbHidden; ++h)
@@ -192,7 +192,7 @@ struct Neural_Network* ExtractData ()
   fclose(weightIH);
 
   //Weight HO
-  FILE* weightHO = fopen("weightHO.w", "r");
+  FILE* weightHO = fopen("bias_weight/weightHO.w", "r");
   for(int h = 0; h < net -> nbHidden; ++h)
   {
     for(int o = 0; o < net -> nbOutput; ++o)
@@ -205,7 +205,7 @@ struct Neural_Network* ExtractData ()
   fclose(weightHO);
 
   //BiasH
-  FILE* biasH = fopen("biasH.b", "r");
+  FILE* biasH = fopen("bias_weight/biasH.b", "r");
   for(int h = 0; h < net -> nbHidden; ++h)
   {
     fgets(line, sizeMax, biasH);
@@ -215,7 +215,7 @@ struct Neural_Network* ExtractData ()
   fclose(biasH);
 
   //BiasO
-  FILE* biasO = fopen("biasO.b", "r");
+  FILE* biasO = fopen("bias_weight/biasO.b", "r");
   for (int o = 0; o < net -> nbOutput; ++o)
   {
     fgets(line, sizeMax, biasO);

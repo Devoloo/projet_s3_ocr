@@ -56,12 +56,6 @@ void load_image(GtkButton *button, GtkImage *image)
 
 int trainNN(GtkButton *button)
 {
-    //Button initialize
-    gtk_button_set_label(*button, "On training");
-    gtk_widget_set_sensitive((GtkWidget) *button, FALSE);
-
-    printf("On training\n");
-
     //Variables
 	int nbEpoch = 5000;
 	int nbLetters = 26 * 1 + 26 * 1; //5 fonts for uppers & 4 for lowers
@@ -108,10 +102,6 @@ int trainNN(GtkButton *button)
 	printf("Save data...\n");
 	SaveData(net);
   	printf("Learn finish\n");
-
-    //Button Finish
-    gtk_button_set_label(*button, "Learn finish");
-    gtk_widget_set_sensitive((GtkWidget) *button, TRUE);
 
 	return EXIT_SUCCESS;
 }
