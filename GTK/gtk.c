@@ -87,7 +87,7 @@ int trainNN()
 	            printf("Epoch %-5d | Error Rate = %s %f \n", epoch,KRED,net->MaxErrorRate);
 	        else
 	            {
-	            printf("Epoch %-5d | Erro rRate = %s %f \n", epoch,KGRN,net->MaxErrorRate);
+	            printf("Epoch %-5d | Error Rate = %s %f \n", epoch,KGRN,net->MaxErrorRate);
 	            }
 	        printf("%s",KWHT);
 	    }
