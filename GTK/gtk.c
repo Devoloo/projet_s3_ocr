@@ -6,47 +6,47 @@ char *text = "";
 GtkWidget *parent;
 void save_text(GtkButton *button, GtkTextBuffer *buffer)
 {
-  UNUSED(button);
-  UNUSED(buffer);
-  GtkWidget *dialog;
-  GtkWidget *toplevel = gtk_widget_get_toplevel (GTK_WIDGET(button));
-  dialog = gtk_file_chooser_dialog_new ("Save Text ",
-                    GTK_WINDOW (toplevel),
-                    GTK_FILE_CHOOSER_ACTION_SAVE,
-                    "Cancel", GTK_RESPONSE_CANCEL,
-                    "Save", GTK_RESPONSE_ACCEPT,
-                    NULL);
-  if (gtk_dialog_run (GTK_DIALOG (dialog)) == GTK_RESPONSE_ACCEPT)
-  {
-    char *filename;
-    filename = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (dialog));
-    /* set the contents of the file to the text from the buffer */
-    if (filename != NULL)
-      g_file_set_contents (filename, text, strlen(text), NULL);
-    else
-      g_file_set_contents (filename, text, strlen(text), NULL);
-  }
-  gtk_widget_destroy (dialog);
-
+    UNUSED(button);
+    UNUSED(buffer);
+    GtkWidget *dialog;
+    GtkWidget *toplevel = gtk_widget_get_toplevel (GTK_WIDGET(button));
+    dialog = gtk_file_chooser_dialog_new ("Save Text ",
+                                          GTK_WINDOW (toplevel),
+                                          GTK_FILE_CHOOSER_ACTION_SAVE,
+                                          "Cancel", GTK_RESPONSE_CANCEL,
+                                          "Save", GTK_RESPONSE_ACCEPT,
+                                          NULL);
+    if (gtk_dialog_run (GTK_DIALOG (dialog)) == GTK_RESPONSE_ACCEPT)
+    {
+        char *filename;
+        filename = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (dialog));
+        /* set the contents of the file to the text from the buffer */
+        if (filename != NULL)
+            g_file_set_contents (filename, text, strlen(text), NULL);
+        else
+            g_file_set_contents (filename, text, strlen(text), NULL);
+    }
+    gtk_widget_destroy (dialog);
 }
+
 void load_image(GtkButton *button, GtkImage *image)
 {
-  if(strcmp(filename,"") == 0)
-    	return;
-  UNUSED(button);
-  SDL_Surface *img = IMG_Load((char *)filename);
-  if(img->w > 576 && img->h > 460)
-  {
-  	printf("Need Resize \n");
+    if(strcmp(filename,"") == 0)
+        return;
+    UNUSED(button);
+    SDL_Surface *img = IMG_Load((char *)filename);
+    if(img->w > 576 && img->h > 460)
+    {
+        printf("Need Resize \n");
 
-	SDL_Surface *new = Resize(img);
+        SDL_Surface *new = Resize(img);
 
-	SDL_SaveBMP(new,"image_resize");
+        SDL_SaveBMP(new,"image_resize");
 
-	gtk_image_set_from_file (GTK_IMAGE (image), "image_resize");
-  }
-  else
-  	gtk_image_set_from_file (GTK_IMAGE (image), filename);
+        gtk_image_set_from_file (GTK_IMAGE (image), "image_resize");
+    }
+    else
+        gtk_image_set_from_file (GTK_IMAGE (image), filename);
 }
 
 //Colors for print
@@ -56,7 +56,7 @@ void load_image(GtkButton *button, GtkImage *image)
 
 int trainNN()
 {
-	//Variables
+    //Variables
 	int nbEpoch = 5000;
 	int nbLetters = 26 * 1 + 26 * 1; //5 fonts for uppers & 4 for lowers
 	int currentChar = 0;
@@ -71,75 +71,72 @@ int trainNN()
 
 	for (int epoch = 0; epoch < nbEpoch; epoch++)
 	{
-			currentChar = 0;
-			for (int l = 0; l < nbLetters; l++)
-			{
+	    currentChar = 0;
+	    for (int l = 0; l < nbLetters; l++)
+	    {
+	        Neural_Network_OCR(net, letters[l], goal[currentChar]);
+	        currentChar++;
 
-					Neural_Network_OCR(net, letters[l], goal[currentChar]);
-          currentChar++;
-
-					if (epoch % 100 == 0)
-					{
-							PrintState(net);
-					}
-			}
-			//== PRINT ERROR EVERY 100 EPOCHs ==//
-			if (epoch % 100 == 0)
-			{
-					if(net -> MaxErrorRate > 0.005)
-							printf("Epoch %-5d | MaxErrorRate = %s %f \n",
-                    epoch,KRED,net->MaxErrorRate);
-					else
-					{
-							printf("Epoch %-5d | MaxErrorRate = %s %f \n",
-                      					epoch,KGRN,net->MaxErrorRate);
-					}
-					printf("%s",KWHT);
-			}
-      if(net->MaxErrorRate<0.0005 && net->MaxErrorRate != 0.0)
-      {
-         break;
-      }
-			net -> MaxErrorRate = 0.0;
+	        if (epoch % 100 == 0)
+	        {
+	            PrintState(net);
+	        }
+	    }
+	    //== PRINT ERROR EVERY 100 EPOCHs ==//
+	    if (epoch % 100 == 0)
+	    {
+	        if(net -> MaxErrorRate > 0.005)
+	            printf("Epoch %-5d | MaxErrorRate = %s %f \n", epoch,KRED,net->MaxErrorRate);
+	        else
+	            {
+	            printf("Epoch %-5d | MaxErrorRate = %s %f \n", epoch,KGRN,net->MaxErrorRate);
+	            }
+	        printf("%s",KWHT);
+	    }
+	    if(net->MaxErrorRate<0.0005 && net->MaxErrorRate != 0.0)
+	    {
+	        break;
+	    }
+	    net -> MaxErrorRate = 0.0;
 	}
-  	printf("Save data...\n");
+	printf("Save data...\n");
 	SaveData(net);
   	printf("Learn finish\n");
 	return EXIT_SUCCESS;
 }
 void openFile(GtkButton *button, GtkLabel *text_label)
 {
-  GtkWidget *label = (GtkWidget *) text_label;
-	GtkWidget *toplevel = gtk_widget_get_toplevel (GTK_WIDGET(button));
+    GtkWidget *label = (GtkWidget *) text_label;
+    GtkWidget *toplevel = gtk_widget_get_toplevel (GTK_WIDGET(button));
 
-	GtkWidget *dialog = gtk_file_chooser_dialog_new (("Choose image"),
-	                                                GTK_WINDOW (toplevel),
-	                                                GTK_FILE_CHOOSER_ACTION_OPEN,
-	                                                "Open", GTK_RESPONSE_ACCEPT,
-	                                                "Cancel", GTK_RESPONSE_CANCEL,
-	                                                NULL);
+    GtkWidget *dialog = gtk_file_chooser_dialog_new (("Choose image"),
+                                                     GTK_WINDOW (toplevel),
+                                                     GTK_FILE_CHOOSER_ACTION_OPEN,
+                                                     "Open", GTK_RESPONSE_ACCEPT,
+                                                     "Cancel", GTK_RESPONSE_CANCEL,
+                                                     NULL);
 
-	switch (gtk_dialog_run (GTK_DIALOG (dialog)))
+    switch (gtk_dialog_run (GTK_DIALOG (dialog)))
 	{
-		case GTK_RESPONSE_ACCEPT:
+        case GTK_RESPONSE_ACCEPT:
 		{
-			filename = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (dialog));
-      			gtk_label_set_text(GTK_LABEL(label),filename);
+		    filename = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (dialog));
+		    gtk_label_set_text(GTK_LABEL(label),filename);
 			break;
 		}
 		default:
-			break;
+		    break;
 	}
 	gtk_widget_destroy(dialog);
 }
 
 int launchOCR(GtkButton *button, GtkTextBuffer *buffer)
 {
-  if(strcmp(filename,"") == 0)
-  {
-    return 1;
-  }
-	UNUSED(button);
+    if(strcmp(filename,"") == 0)
+    {
+        return 1;
+    }
+    UNUSED(button);
 	SDL_Init(SDL_INIT_VIDEO);
 	printf("%s \n ",filename);
 	SDL_Surface *img = IMG_Load((char *)filename);
@@ -153,12 +150,12 @@ int launchOCR(GtkButton *button, GtkTextBuffer *buffer)
 	SDL_Surface *image_cut = lineCut(img);
 	printf("Line Cuts\n");
 	printf("Character cuts\n");
-  struct Neural_Network *net = ExtractData();
-  printf("Extract Data Done \n");
+    struct Neural_Network *net = ExtractData();
+    printf("Extract Data Done \n");
 	isolateLine(image_cut,net);
-  printf("Isolate Line Done \n");
-  gtk_text_buffer_set_text (buffer,net->str,strlen(net->str));
-  text = net->str;
+	printf("Isolate Line Done \n");
+	gtk_text_buffer_set_text (buffer,net->str,strlen(net->str));
+	text = net->str;
 	printf("Finish Treatment\n");
 
 	SDL_Quit();
@@ -168,7 +165,7 @@ int launchOCR(GtkButton *button, GtkTextBuffer *buffer)
 void create_window(int argc, char *argv[])
 {
 	//Init variables
-    	GtkWidget *main_window;
+	GtkWidget *main_window;
 	SGlobalData data;
 	//Init GTK
 	gtk_init(&argc, &argv);
