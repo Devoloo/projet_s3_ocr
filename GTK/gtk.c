@@ -143,6 +143,8 @@ int launchOCR(GtkButton *button, GtkTextBuffer *buffer)
 
 	SDL_Surface *img = IMG_Load((char *)filename);
 
+	noiseReduction(img);
+
 	greyscale(img);
 
 	blacknwhite(img);
