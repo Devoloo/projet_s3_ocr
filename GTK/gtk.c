@@ -31,20 +31,21 @@ void save_text(GtkButton *button, GtkTextBuffer *buffer)
 
 void load_image(GtkButton *button, GtkImage *image)
 {
-    if(strcmp(filename,"") == 0)
-        return;
-    UNUSED(button);
-    SDL_Surface *img = IMG_Load((char *)filename);
-    if(img->w > 576 && img->h > 460)
-    {
-        SDL_Surface *new = Resize(img);
+    	if(strcmp(filename,"") == 0)
+        	return;
+    	UNUSED(button);
+    	SDL_Surface *img = IMG_Load((char *)filename);
+	
+    	if(img->w > 576 && img->h > 460)
+    	{
+        	SDL_Surface *new = Resize(img);
 
-        SDL_SaveBMP(new,"image_resize");
+        	SDL_SaveBMP(new,"image_resize");
 
-        gtk_image_set_from_file (GTK_IMAGE (image), "image_resize");
-    }
-    else
-        gtk_image_set_from_file (GTK_IMAGE (image), filename);
+        	gtk_image_set_from_file (GTK_IMAGE (image), "image_resize");
+    	}
+    	else
+        	gtk_image_set_from_file (GTK_IMAGE (image), filename);
 }
 
 //Colors for print
@@ -132,13 +133,14 @@ void openFile(GtkButton *button, GtkLabel *text_label)
 
 int launchOCR(GtkButton *button, GtkTextBuffer *buffer)
 {
-    if(strcmp(filename,"") == 0)
-    {
-        return 1;
-    }
-    UNUSED(button);
+    	if(strcmp(filename,"") == 0)
+    	{
+        	return 1;
+    	}
+    	UNUSED(button);
+
 	SDL_Init(SDL_INIT_VIDEO);
-	printf("%s \n ",filename);
+
 	SDL_Surface *img = IMG_Load((char *)filename);
 
 	greyscale(img);
@@ -146,9 +148,13 @@ int launchOCR(GtkButton *button, GtkTextBuffer *buffer)
 	blacknwhite(img);
 
 	SDL_Surface *image_cut = lineCut(img);
-    struct Neural_Network *net = ExtractData();
+
+    	struct Neural_Network *net = ExtractData();
+
 	isolateLine(image_cut,net);
+
 	gtk_text_buffer_set_text (buffer,net->str,strlen(net->str));
+
 	text = net->str;
 
 	SDL_Quit();

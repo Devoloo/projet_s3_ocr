@@ -7,7 +7,7 @@
 
 1. Choose an image
 
-2. Load image
+2. Use the image treatment
 
 3. Train the AI
 
@@ -100,7 +100,7 @@
                 <property name="baseline-position">bottom</property>
                 <child>
                   <object class="GtkButton" id="load">
-                    <property name="label" translatable="yes">Load image</property>
+                    <property name="label" translatable="yes">Image treatment</property>
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
                     <property name="receives-default">True</property>
