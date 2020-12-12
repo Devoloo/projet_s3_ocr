@@ -50,12 +50,13 @@ void load_image(GtkButton *button, GtkImage *image)
 //Colors for print
 #define KRED  "\x1B[31m"
 #define KGRN  "\x1B[32m"
-#define KWHT  "\x1B[37m"
+#define KWHT  "\x1B[0m"
 
 int trainNN()
 {
-    //Variables
-	int nbEpoch = 5000;
+	printf("Learn start\n");
+    	//Variables
+	int nbEpoch = 7500;
 	int nbLetters = 26 * 1 + 26 * 1; //5 fonts for uppers & 4 for lowers
 	int currentChar = 0;
 	srand(time(NULL));
@@ -84,22 +85,22 @@ int trainNN()
 	    if (epoch % 100 == 0)
 	    {
 	        if(net -> MaxErrorRate > 0.005)
-	            printf("Epoch %-5d | Error Rate = %s %f \n", epoch,KRED,net->MaxErrorRate);
+	            printf("%-5d | Error Rate = %s %f \n", epoch,KRED,net->MaxErrorRate);
 	        else
 	            {
-	            printf("Epoch %-5d | Error Rate = %s %f \n", epoch,KGRN,net->MaxErrorRate);
+	            printf("%-5d | Error Rate = %s %f \n", epoch,KGRN,net->MaxErrorRate);
 	            }
 	        printf("%s",KWHT);
 	    }
-	    if(net->MaxErrorRate<0.0005 && net->MaxErrorRate != 0.0)
+	    if(net->MaxErrorRate<0.0004 && net->MaxErrorRate != 0.0)
 	    {
 	        break;
 	    }
 	    net -> MaxErrorRate = 0.0;
 	}
-	printf("Saving data...\n");
 	SaveData(net);
   	printf("Learn finish\n");
+	printf("%s",KWHT);
 
 	return EXIT_SUCCESS;
 }

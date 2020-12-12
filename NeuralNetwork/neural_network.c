@@ -182,27 +182,11 @@ void PrintState(struct Neural_Network *net)
   int output = RetrievePos(net);
 
   //Retrive the chars : wanted & found
-  char goalChar = RetrieveChar(PosGoal(net -> Goal));
-  char recognizedChar = RetrieveChar(output);
+  RetrieveChar(PosGoal(net -> Goal));
+  RetrieveChar(output);
 
   if(net -> ErrorRate > net -> MaxErrorRate)
     net -> MaxErrorRate = net -> ErrorRate;
-
-  //Print the progress
-  if(output == PosGoal(net -> Goal))
-    printf("Position Found = %d Expected %d %sOK \n",
-                    output, PosGoal(net -> Goal),KGRN);
-  else
-    printf("Position Found = %d Expected %d %sKO \n",
-                    output, PosGoal(net -> Goal),KRED);
-
-  printf("%s",KWHT);
-
-  printf("Char entered: %c -> Char recognized: %c | Error rate: %f |\n",
-                                                    goalChar,
-                                                    recognizedChar,
-                                                    net -> ErrorRate);
-  printf("%s",KWHT);
 }
 
 void Neural_Network_OCR(struct Neural_Network *net, double *input, double *goal)
